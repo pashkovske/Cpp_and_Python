@@ -1,5 +1,5 @@
-#ifndef LORENTZ_VECTOR
-#define LORENTZ_VECTOR
+#pragma once
+#include <iostream>
 #define C 1
 
 class LorentzVector
@@ -21,20 +21,20 @@ public:
 	void y(double arg);
 	void z(double arg);
 	
-	void operator += (const LorentzVector& arg);
-	void operator -= (const LorentzVector& arg);
-	void operator *= (double arg);
+	LorentzVector operator += (const LorentzVector& arg);
+	LorentzVector operator -= (const LorentzVector& arg);
+	LorentzVector operator *= (double arg);
 
 	LorentzVector operator + (const LorentzVector& right_arg) const;
 	LorentzVector operator - (const LorentzVector& right_arg) const;
-	LorentzVector operator - (const LorentzVector& right_arg) const;
+	friend LorentzVector operator * (const LorentzVector& left_arg, double right_arg);
+	friend LorentzVector operator * (double left_arg, const LorentzVector& right_arg);
 
 	void zboost(double beta);
 	double dot(const LorentzVector&) const;
 
-	void read();
-	void print() const;
+	friend std::istream& operator >> (std::istream&, LorentzVector&);
+	friend std::ostream& operator << (std::ostream&, const LorentzVector&);
 private:
 	double t_, x_, y_, z_;
 };
-#endif

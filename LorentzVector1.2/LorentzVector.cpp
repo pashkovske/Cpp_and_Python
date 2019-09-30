@@ -48,21 +48,60 @@ void LorentzVector::x(double arg) {x_ = arg;}
 void LorentzVector::y(double arg) {y_ = arg;}
 void LorentzVector::z(double arg) {z_ = arg;}
 
-LorentzVector LorentzVector::add(const LorentzVector& right_arg) const
+LorentzVector LorentzVector::operator += (const LorentzVector& arg)
 {
-	LorentzVector result(t_ + right_arg.t(), x_ + right_arg.x(), y_ + right_arg.y(), z_ + right_arg.z());
+	t_ += arg.t();
+	x_ += arg.x();
+	y_ += arg.y();
+	z_ += arg.z();
+	return *this;
+}
+
+
+LorentzVector LorentzVector::operator -= (const LorentzVector& arg)
+{
+	t_ -= arg.t();
+	x_ -= arg.x();
+	y_ -= arg.y();
+	z_ -= arg.z();
+	return *this;
+}
+
+LorentzVector LorentzVector::operator *= (double arg)
+{
+	t_ *= arg;
+	x_ *= arg;
+	y_ *= arg;
+	z_ *= arg;
+	return *this;
+}
+
+
+LorentzVector LorentzVector::operator + (const LorentzVector& right_arg) const
+{
+	LorentzVector result = *this;
+	result += right_arg;
 	return result;
 }
 
-LorentzVector LorentzVector::sub(const LorentzVector& right_arg) const
+LorentzVector LorentzVector::operator - (const LorentzVector& right_arg) const
 {
-	LorentzVector result(t_ - right_arg.t(), x_ - right_arg.x(), y_ - right_arg.y(), z_ - right_arg.z());
+	LorentzVector result = *this;
+	result -= right_arg;
 	return result;
 }
 
-LorentzVector LorentzVector::mul(double arg) const
+LorentzVector operator * (double left_arg, const LorentzVector& right_arg)
 {
-	LorentzVector result(t_*arg, x_*arg, y_*arg, z_*arg);
+	LorentzVector result = right_arg;
+	result *= left_arg;
+	return result;
+}
+
+LorentzVector operator * (const LorentzVector& left_arg, double right_arg)
+{
+	LorentzVector result = left_arg;
+	result *= right_arg;
 	return result;
 }
 
@@ -83,17 +122,14 @@ double LorentzVector::dot(const LorentzVector& right_arg) const
 	return C*t_ * C*right_arg.t() - x_ * right_arg.x() - y_ * right_arg.y() - z_ * right_arg.z();
 }
 
-void LorentzVector::read()
+std::istream& operator >> (std::istream& stream, LorentzVector& arg)
 {
-	double t, x, y, z;
-	std::cin >> t >> x >> y >> z;
-	t_ = t;
-	x_ = x;
-	y_ = y;
-	z_ = z;
+	stream >> arg.t_ >> arg.x_ >> arg.y_ >> arg.z_;
+	return stream;
 }
 
-void LorentzVector::print() const
+std::ostream& operator << (std::ostream& stream, const LorentzVector& arg)
 {
-	std::cout << '(' << t_ << ", " << x_ << ", " << y_ << ", " << z_ << ')' << std::endl;
+	stream << arg.t_ << " " << arg.x_ << " " << arg.y_ << " " << arg.z_;
+	return stream;
 }
