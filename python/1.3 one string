@@ -1,0 +1,25 @@
+import math
+from random import random
+from math import factorial as fact
+
+print(sum([i for i in range(2 ** 25)])) # 2^25 не включается
+
+print(fact(1000))
+
+a = [int(random()*1000) for i in range(50)] # инициализация списка
+print([i*(1 + i%2) for i in a])
+
+a = [int(random()*10) for i in range(20)] # инициализация 1ого списка
+b = [int(random()*10) for i in range(10)] # инициализация 2ого списка
+print([i for i in a if not i in b]) # если в массиве a есть повторяющиеся элементы, они выводятся столько же раз и в том же порядке по отношению к остальным
+
+print([[chr(ord('A') + i) + str(j+1) for i in range(10)] for j in range(10)])
+
+print(len([1 for i in range(0,10**6,2) if i%7 != 0 and str(i)[0:3] == '793']))
+
+print(str(input())[::-1])
+
+print(len([1 for i in open('input.txt').read() if i == 'z']))
+
+print(3*math.sqrt(2*sum([(fact(i-1))**2/fact(2*i) for i in range(1,150)])))
+# использована формула ряда arcsin^2(x) (см. ru.wikipedia.org/wiki/Ряд_обратных_квадратов#Методы_из_курса_анализа_Г._М._Фихтенгольца)
